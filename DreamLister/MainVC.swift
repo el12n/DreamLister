@@ -26,7 +26,6 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, NSFe
         attemptFecth()
     }
     
-    
     //    MARK: - Helpers
     func attemptFecth(){
         let fetchRequest: NSFetchRequest<Item> = Item.fetchRequest()
@@ -34,7 +33,10 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, NSFe
         fetchRequest.sortDescriptors  = [dateSort]
         
         let controller = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+        
+        controller.delegate = self
         self.controller = controller
+        
         do {
             try controller.performFetch()
         }catch {
@@ -48,6 +50,15 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, NSFe
         cell.configureItemCell(item: item)
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ItemDetailsVC" {
+            if let destination = segue.destination as? ItemDetailsVC {
+                if let item = sender as? Item {
+                    destination.itemToEdit = item
+                }
+            }
+        }
+    }
     
     //    MARK: - TableView Delegate & DataSource
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -73,6 +84,13 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, NSFe
         let cell = tableView.dequeueReusableCell(withIdentifier: "ItemCell", for: indexPath) as! ItemCell
         configureCell(cell: cell, indexPath: indexPath)
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let objects = controller.fetchedObjects, objects.count > 0 {
+            let item = objects[indexPath.row]
+            performSegue(withIdentifier: "ItemDetailsVC", sender: item)
+        }
     }
     
     //    MARK: - NSFetchedResult Delegate
@@ -108,20 +126,5 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, NSFe
             }
         }
     }
-    
-}
-
-func generateTestData(){
-    let item = Item(context: context)
-    item.title = "MacBook Pro"
-    item.price = 1300
-    item.details = "Waiting for black friday"
-    
-    let item2 = Item(context: context)
-    item2.title = "Tesla Model S"
-    item2.price = 110000
-    item2.details = "In december I will"
-    
-    ad.saveContext()
 }
 

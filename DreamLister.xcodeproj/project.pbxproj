@@ -24,6 +24,7 @@
 		208682BC1DC92760001A5310 /* tesla.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 208682BB1DC92760001A5310 /* tesla.jpg */; };
 		208682BF1DC927C7001A5310 /* MaterialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208682BE1DC927C7001A5310 /* MaterialView.swift */; };
 		208682C11DC92A16001A5310 /* ItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208682C01DC92A16001A5310 /* ItemCell.swift */; };
+		20EBACF61DCA16C100EC5E16 /* ItemDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20EBACF51DCA16C100EC5E16 /* ItemDetailsVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +47,7 @@
 		208682BB1DC92760001A5310 /* tesla.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = tesla.jpg; sourceTree = "<group>"; };
 		208682BE1DC927C7001A5310 /* MaterialView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MaterialView.swift; sourceTree = "<group>"; };
 		208682C01DC92A16001A5310 /* ItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemCell.swift; sourceTree = "<group>"; };
+		20EBACF51DCA16C100EC5E16 /* ItemDetailsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemDetailsVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,7 +82,7 @@
 			children = (
 				208682BD1DC927A2001A5310 /* Views */,
 				208682B91DC9210B001A5310 /* Models */,
-				208682C21DC92B81001A5310 /* Models */,
+				208682C21DC92B81001A5310 /* Controllers */,
 				201B0F541DC90947005DFEED /* AppDelegate.swift */,
 				201B0F581DC90947005DFEED /* Main.storyboard */,
 				201B0F5E1DC90948005DFEED /* Assets.xcassets */,
@@ -124,12 +126,13 @@
 			name = Views;
 			sourceTree = "<group>";
 		};
-		208682C21DC92B81001A5310 /* Models */ = {
+		208682C21DC92B81001A5310 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				201B0F561DC90947005DFEED /* MainVC.swift */,
+				20EBACF51DCA16C100EC5E16 /* ItemDetailsVC.swift */,
 			);
-			name = Models;
+			name = Controllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -214,6 +217,7 @@
 				208682B11DC92107001A5310 /* Item+CoreDataClass.swift in Sources */,
 				208682B61DC92107001A5310 /* Store+CoreDataProperties.swift in Sources */,
 				201B0F5D1DC90947005DFEED /* DreamLister.xcdatamodeld in Sources */,
+				20EBACF61DCA16C100EC5E16 /* ItemDetailsVC.swift in Sources */,
 				208682B51DC92107001A5310 /* Store+CoreDataClass.swift in Sources */,
 				208682B41DC92107001A5310 /* ItemType+CoreDataProperties.swift in Sources */,
 				208682B21DC92107001A5310 /* Item+CoreDataProperties.swift in Sources */,
