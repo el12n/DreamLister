@@ -21,6 +21,9 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, NSFe
         
         tableView.delegate = self
         tableView.dataSource = self
+        
+        //generateTestData()
+        attemptFecth()
     }
     
     
@@ -31,12 +34,18 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, NSFe
         fetchRequest.sortDescriptors  = [dateSort]
         
         let controller = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+        self.controller = controller
         do {
             try controller.performFetch()
         }catch {
             let error = error as NSError
             print("\(error)")
         }
+    }
+    
+    func configureCell(cell: ItemCell, indexPath: IndexPath){
+        let item = controller.object(at: indexPath)
+        cell.configureItemCell(item: item)
     }
     
     
@@ -56,8 +65,14 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, NSFe
         return 0
     }
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 150
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ItemCell", for: indexPath) as! ItemCell
+        configureCell(cell: cell, indexPath: indexPath)
+        return cell
     }
     
     //    MARK: - NSFetchedResult Delegate
@@ -82,8 +97,7 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, NSFe
         case .update:
             if let indexPath = indexPath {
                 let cell = tableView.cellForRow(at: indexPath) as! ItemCell
-                //                Update data
-                
+                configureCell(cell: cell, indexPath: indexPath)
             }
         case .move:
             if let indexPath = indexPath{
@@ -95,5 +109,19 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, NSFe
         }
     }
     
+}
+
+func generateTestData(){
+    let item = Item(context: context)
+    item.title = "MacBook Pro"
+    item.price = 1300
+    item.details = "Waiting for black friday"
+    
+    let item2 = Item(context: context)
+    item2.title = "Tesla Model S"
+    item2.price = 110000
+    item2.details = "In december I will"
+    
+    ad.saveContext()
 }
 
