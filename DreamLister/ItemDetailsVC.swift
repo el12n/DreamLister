@@ -9,16 +9,18 @@
 import UIKit
 import CoreData
 
-class ItemDetailsVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
+class ItemDetailsVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     
     @IBOutlet weak var storePicker: UIPickerView!
     @IBOutlet weak var titleField: UITextField!
     @IBOutlet weak var priceField: UITextField!
     @IBOutlet weak var detailsField: UITextField!
+    @IBOutlet weak var imageView: UIImageView!
     
     var stores = [Store]()
     var itemToEdit: Item?
+    var imagePicker: UIImagePickerController!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +28,9 @@ class ItemDetailsVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSou
         if let topItem = self.navigationController?.navigationBar.topItem {
             topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         }
+        
+        imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
         
         titleField.delegate = self
         priceField.delegate = self
@@ -113,6 +118,14 @@ class ItemDetailsVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSou
         return true
     }
     
+    //    MARK: - UIImagePickerController Delegate
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            imageView.image = image
+        }
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
     //    MARK: - Actions
     @IBAction func savePressed() {
         var item: Item
@@ -148,6 +161,11 @@ class ItemDetailsVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSou
             _ = navigationController?.popViewController(animated: true)
         }
     }
+    
+    @IBAction func imagePressed() {
+        present(imagePicker, animated: true, completion: nil)
+    }
+    
 }
 
 
