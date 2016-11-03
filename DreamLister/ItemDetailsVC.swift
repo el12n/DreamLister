@@ -43,7 +43,7 @@ class ItemDetailsVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSou
         if itemToEdit != nil {
             loadItemData()
         }
-        //        generateStores()
+        //generateStores()
     }
     
     //    MARK: - Helpers
@@ -63,6 +63,7 @@ class ItemDetailsVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSou
             titleField.text = item.title
             priceField.text = "\(item.price)"
             detailsField.text = item.details
+            imageView.image = item.toImage?.image as? UIImage
             if let store = item.toStore {
                 storePicker.selectRow(getPickerIndexForStoreWith(name: store.name!), inComponent: 0, animated: false)
             }
@@ -128,7 +129,7 @@ class ItemDetailsVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSou
     
     //    MARK: - Actions
     @IBAction func savePressed() {
-        var item: Item
+        var item: Item!
         
         if itemToEdit != nil {
             item = itemToEdit!
@@ -147,6 +148,10 @@ class ItemDetailsVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSou
         }
         
         item.toStore = stores[storePicker.selectedRow(inComponent: 0)]
+        
+        let picture = Image(context: context)
+        picture.image = imageView.image
+        item.toImage = picture
         
         ad.saveContext()
         
